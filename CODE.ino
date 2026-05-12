@@ -120,34 +120,43 @@ else {
 
 // // ================= GAS SENSOR =================
 
-// int gasValue = analogRead(GAS_SENSOR_PIN);
+int gasValue = analogRead(GAS_SENSOR_PIN);
 
-// static bool gasDetected = false;
+static bool gasDetected = false;
 
-// // GAS DETECTED
-// if (gasValue > 400) {
+// GAS DETECTED
+if (gasValue > 400) {
 
-//   if (!gasDetected) {
+  if (!gasDetected) {
 
-//     Serial.print(getTimeStamp());
-//     Serial.print(" GAS EVENT | Gas Detected | Sensor Value: ");
-//     Serial.println(gasValue);
+    Serial.print(getTimeStamp());
+    Serial.print(" GAS EVENT | Gas Detected | Sensor Value: ");
+    Serial.println(gasValue);
 
-//     gasDetected = true;
-//   }
-// }
+    // LED + BUZZER FOR 1 SEC
+    digitalWrite(RED_LED, LOW);
+    digitalWrite(BUZZER_PIN, HIGH);
 
-// // AIR NORMAL
-// else {
+    delay(1000);
 
-//   if (gasDetected) {
+    digitalWrite(RED_LED, HIGH);
+    digitalWrite(BUZZER_PIN, LOW);
 
-//     Serial.print(getTimeStamp());
-//     Serial.println(" GAS EVENT | Air Normal");
+    gasDetected = true;
+  }
+}
 
-//     gasDetected = false;
-//   }
-// }
+// AIR NORMAL
+else {
+
+  if (gasDetected) {
+
+    Serial.print(getTimeStamp());
+    Serial.println(" GAS EVENT | Air Normal");
+
+    gasDetected = false;
+  }
+}
 
   // ================= ULTRASONIC =================
 
